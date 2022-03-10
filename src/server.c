@@ -1843,6 +1843,7 @@ void checkChildrenDone(void) {
  * a macro is used: run_with_period(milliseconds) { .... }
  */
 
+/* 定时器核心逻辑 */
 int serverCron(struct aeEventLoop *eventLoop, long long id, void *clientData) {
     int j;
     UNUSED(eventLoop);
@@ -2340,6 +2341,7 @@ void createSharedObjects(void) {
     shared.maxstring = sdsnew("maxstring");
 }
 
+/* 初始化 server 端的各项配置 */
 void initServerConfig(void) {
     int j;
 
@@ -2825,6 +2827,9 @@ void makeThreadKillable(void) {
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 }
 
+/* 
+ * 初始化服务器
+*/
 void initServer(void) {
     int j;
 
@@ -3037,6 +3042,9 @@ void initServer(void) {
     latencyMonitorInit();
 }
 
+/* 
+ * 初始化服务器之后，再做的步骤
+*/
 /* Some steps in server initialization need to be done last (after modules
  * are loaded).
  * Specifically, creation of threads due to a race bug in ld.so, in which
@@ -3112,6 +3120,7 @@ int populateCommandTableParseFlags(struct redisCommand *c, char *strflags) {
     return C_OK;
 }
 
+/* 命令表初始化 */
 /* Populates the Redis Command Table starting from the hard coded list
  * we have on top of server.c file. */
 void populateCommandTable(void) {
@@ -5294,6 +5303,7 @@ int iAmMaster(void) {
             (server.cluster_enabled && nodeIsMaster(server.cluster->myself)));
 }
 
+/* 主函数 */
 int main(int argc, char **argv) {
     struct timeval tv;
     int j;
@@ -5530,6 +5540,7 @@ int main(int argc, char **argv) {
     redisSetCpuAffinity(server.server_cpulist);
     setOOMScoreAdj(-1);
 
+    
     aeMain(server.el);
     aeDeleteEventLoop(server.el);
     return 0;

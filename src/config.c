@@ -621,6 +621,7 @@ loaderr:
     exit(1);
 }
 
+/* 加载配置文件 */
 /* Load the server configuration from the specified filename.
  * The function appends the additional configuration directives stored
  * in the 'options' string to the config file before loading.

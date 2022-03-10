@@ -3457,6 +3457,7 @@ void clusterHandleManualFailover(void) {
  * CLUSTER cron job
  * -------------------------------------------------------------------------- */
 
+/* 集群定时事件 */
 /* This is executed 10 times every second */
 void clusterCron(void) {
     dictIterator *di;

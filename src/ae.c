@@ -533,6 +533,7 @@ int aeWait(int fd, int mask, long long milliseconds) {
     }
 }
 
+/* 启动事件循环处理线程，开始接受客户端连接并处理客户端命令 */
 void aeMain(aeEventLoop *eventLoop) {
     eventLoop->stop = 0;
     while (!eventLoop->stop) {
