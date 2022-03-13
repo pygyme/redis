@@ -68,6 +68,7 @@ typedef int aeTimeProc(struct aeEventLoop *eventLoop, long long id, void *client
 typedef void aeEventFinalizerProc(struct aeEventLoop *eventLoop, void *clientData);
 typedef void aeBeforeSleepProc(struct aeEventLoop *eventLoop);
 
+/* 文件事件抽象 */
 /* File event structure */
 typedef struct aeFileEvent {
     int mask; /* one of AE_(READABLE|WRITABLE|BARRIER) */
@@ -76,6 +77,7 @@ typedef struct aeFileEvent {
     void *clientData;
 } aeFileEvent;
 
+/* 定时事件抽象 */
 /* Time event structure */
 typedef struct aeTimeEvent {
     long long id; /* time event identifier. */
@@ -90,12 +92,14 @@ typedef struct aeTimeEvent {
   		   * freed in recursive time event calls. */
 } aeTimeEvent;
 
+/* 已经触发的事件 抽象 */
 /* A fired event */
 typedef struct aeFiredEvent {
     int fd;
     int mask;
 } aeFiredEvent;
 
+/* 事件循环抽象 */
 /* State of an event based program */
 typedef struct aeEventLoop {
     int maxfd;   /* highest file descriptor currently registered */
@@ -112,6 +116,7 @@ typedef struct aeEventLoop {
     int flags;
 } aeEventLoop;
 
+/* 事件循环操作接口抽象 */
 /* Prototypes */
 aeEventLoop *aeCreateEventLoop(int setsize);
 void aeDeleteEventLoop(aeEventLoop *eventLoop);

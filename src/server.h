@@ -659,11 +659,15 @@ typedef struct clientReplyBlock {
     char buf[];
 } clientReplyBlock;
 
+/* redisDb 对单个数据库的抽象 */
 /* Redis database representation. There are multiple databases identified
  * by integers from 0 (the default database) up to the max configured
  * database. The database number is the 'id' field in the structure. */
 typedef struct redisDb {
+    
+    /* 数据库键空间，保存着数据库中的所有键值对 */
     dict *dict;                 /* The keyspace for this DB */
+
     dict *expires;              /* Timeout of keys with a timeout set */
     dict *blocking_keys;        /* Keys with clients waiting for data (BLPOP)*/
     dict *ready_keys;           /* Blocked keys that received a PUSH */
@@ -1077,7 +1081,10 @@ struct redisServer {
     mode_t umask;               /* The umask value of the process on startup */
     int hz;                     /* serverCron() calls frequency in hertz */
     int in_fork_child;          /* indication that this is a fork child */
+
+    /* 一个数组，保存着服务器中的所有数据库 */
     redisDb *db;
+
     dict *commands;             /* Command table */
     dict *orig_commands;        /* Command table before command renaming. */
     aeEventLoop *el;
@@ -1213,7 +1220,10 @@ struct redisServer {
     int active_defrag_cycle_max;       /* maximal effort for defrag in CPU percentage */
     unsigned long active_defrag_max_scan_fields; /* maximum number of fields of set/hash/zset/list to process from within the main dict scan */
     _Atomic size_t client_max_querybuf_len; /* Limit for client query buffer length */
+    
+    /* 服务器的数据库数量 */
     int dbnum;                      /* Total number of configured DBs */
+
     int supervised;                 /* 1 if supervised, 0 otherwise. */
     int supervised_mode;            /* See SUPERVISED_* */
     int daemonize;                  /* True if running as a daemon */
